@@ -4,8 +4,11 @@ materialized = 'view'
 ) }}
 
 with source as (
-select * from {{ source ( 'bronze', 'raw_repositories') }}
-) ,
+    select * from {{ source ('bronze', 'raw_repositories') }}
+    -- pb quand je faisais dbt test avec les nouvelles tables incrementales : 
+    -- on garde uniquement la ligne la plus récente pour chaque dépôt
+    QUALIFY ROW_NUMBER() OVER (PARTITION BY full_name ORDER BY snapshot_date DESC) = 1
+),
 
 cleaned as (
 SELECT 

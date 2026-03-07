@@ -10,7 +10,6 @@ sources:
           - name: full_name
             description: "Unique identifier owner/repo"
             tests: 
-              - unique
               - not_null
 
       - name: raw_commits

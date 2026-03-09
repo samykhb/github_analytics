@@ -1,0 +1,12 @@
+snapshots:
+  - name: snap_repositories
+    relation: source('bronze', 'raw_repositories')
+    config:
+      schema: snapshots
+      unique_key: "full_name"
+      strategy: "check"
+      check_cols:
+        - stargazers_count
+        - forks_count
+        - watchers_count
+        - open_issues_count
